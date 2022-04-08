@@ -1,28 +1,27 @@
+const val discount = 100
+const val discount2 = 5
+const val discountForMusicLover = 1
+
 fun main() {
-    val isAudiophile = true
-    val accumulatedPurchases = 7000
-    val discount3 = 0.03
-    val discount5 = 0.05
-    val discountAudiophile = 0.01
-    val totalPrice = 1000
+    println(AfterDiscount(100, true))
+    println(AfterDiscount(1700, false))
+    println(AfterDiscount(19000, true))
+}
 
-    val finalPrice = if (isAudiophile) {
-        if (accumulatedPurchases in 1001..10000) {
-            totalPrice * (1 - discount3) * (1 - discountAudiophile)
-        } else if (accumulatedPurchases > 10000) {
-            totalPrice * (1 - discount5) * (1 - discountAudiophile)
-        } else {
-            totalPrice
-        }
-    } else {
-        if (accumulatedPurchases in 1001..10000) {
-            totalPrice * (1 - discount3)
-        } else if (accumulatedPurchases > 10000) {
-            totalPrice * (1 - discount5)
-        } else {
-            totalPrice
-        }
+fun AfterDiscount(sum: Int, isPermanent: Boolean): String {
+    var rubles = 0
+    var penny = 0
+    if (sum <= 1000) rubles = sum else if (sum in 1001..10000) rubles = (sum - discount)
+    else {
+        rubles = sum - sum / 100 * discount2
+        penny = sum % 100 * discount2
     }
+    if (isPermanent) {
+        penny += rubles * 100
+        penny -= penny / 100 * discountForMusicLover
+        rubles = penny / 100
+        penny %= 100
+    }
+    return "$rubles рублей, $penny копеек"
 
-    println("Стоимость товара: $totalPrice, Итог с учетом скидки: $finalPrice")
 }
